@@ -19,15 +19,15 @@ const messaging = firebase.messaging();
 self.addEventListener("push", function (event) {
   if (event.data) {
     // 알림 메세지일 경우엔 event.data.json().notification;
-    const data = event.data.json().data;
-    const options = {
-      body: data.body,
-      icon: data.image,
-      image: data.image,
-      data: {
-        click_action: data.click_action, // 이 필드는 밑의 클릭 이벤트 처리에 사용됨
-      },
-    };
+    const data = event.data.json().notification();
+    // const options = {
+    //   body: data.body,
+    //   icon: data.image,
+    //   image: data.image,
+    //   data: {
+    //     click_action: data.click_action, // 이 필드는 밑의 클릭 이벤트 처리에 사용됨
+    //   },
+    // };
 
     event.waitUntil(self.registration.showNotification(data.title, options));
   } else {
