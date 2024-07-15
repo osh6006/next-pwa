@@ -79,8 +79,8 @@ export default function Home() {
       >
         등록 토큰 받기
       </button>
-      <div className="max-w-[80%]">
-        <p className="mt-4">아래의 토큰을 보내주세요</p>
+      <div className="break-keep text-center ">
+        <p className="mt-4">아래의 개발자에게 토큰을 보내주세요</p>
         <p className="text-xs mt-4">{!showToken ? "토큰 없음" : showToken}</p>
       </div>
     </main>
