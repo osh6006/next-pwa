@@ -1,10 +1,14 @@
 "use client";
 
-import { setTokenHandler } from "@/lib/firebase";
+import { app, setTokenHandler } from "@/lib/firebase";
 import { sendPushNotification } from "@/utils/notification";
+import { getMessaging, getToken } from "firebase/messaging";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Home() {
+  const [showToken, setShowToken] = useState("");
+
   // 푸시 알림 테스트
   const handlePush = () => {
     sendPushNotification("테스트 알림 입니다.", "알림을 확인해 보세요");
@@ -20,6 +24,25 @@ export default function Home() {
         console.log("푸시 승인됨");
       }
     });
+  };
+
+  const handleGetToken = async () => {
+    const messaging = getMessaging(app);
+    await getToken(messaging, {
+      vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY,
+    })
+      .then(async (currentToken) => {
+        if (!currentToken) {
+          // 토큰 생성 불가시 처리할 내용, 주로 브라우저 푸시 허용이 안된 경우에 해당한다.
+        } else {
+          // 토큰을 받았다면 여기서 DB에 저장하면 됩니다.
+          console.log(currentToken);
+          setShowToken(currentToken);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -52,10 +75,12 @@ export default function Home() {
 
       <button
         className="mt-10 border p-3 rounded-md cursor-pointer select-none z-40"
-        onClick={setTokenHandler}
+        onClick={handleGetToken}
       >
         등록 토큰 받기
       </button>
+      <p className="mt-4">아래의 토큰을 보내주세요</p>
+      <p className="text-xs mt-4">{!showToken ? "토큰 없음" : showToken}</p>
     </main>
   );
 }
