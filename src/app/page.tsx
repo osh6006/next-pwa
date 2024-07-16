@@ -1,6 +1,8 @@
 "use client";
 
-import { app, setTokenHandler } from "@/lib/firebase";
+import InstallPrompt from "@/components/installPrompt";
+import useDivice from "@/hooks/use-divice";
+import { app } from "@/lib/firebase";
 import { sendPushNotification } from "@/utils/notification";
 import { getMessaging, getToken } from "firebase/messaging";
 import {
@@ -11,11 +13,14 @@ import {
   ScanTextIcon,
 } from "lucide-react";
 import Image from "next/image";
+
 import { useState } from "react";
 
 export default function Home() {
   const [showToken, setShowToken] = useState("");
   const [copySuccess, setCopySuccess] = useState(false);
+
+  const { isIOS, isPWA } = useDivice();
 
   // 푸시 알림 테스트
   const handlePush = () => {
@@ -87,7 +92,6 @@ export default function Home() {
       <h1 className="mt-4 text-xl text-center break-keep font-bold">
         PWA Test App 입니다.{" "}
       </h1>
-
       <div className="space-y-5 py-8 flex flex-col">
         <button
           onClick={handlePush}
@@ -114,7 +118,6 @@ export default function Home() {
           등록 토큰 받기
         </button>
       </div>
-
       <div className="text-center">
         <p className="mt-4">아래의 토큰을 개발자에게 보내주세요</p>
         <p className="text-xs mt-4 break-words">
@@ -137,6 +140,7 @@ export default function Home() {
           </button>
         )}
       </div>
+      <InstallPrompt />
     </main>
   );
 }
