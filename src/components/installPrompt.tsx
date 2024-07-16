@@ -8,10 +8,10 @@ import useDivice from "@/hooks/use-divice";
 interface IInstallPromptProps {}
 
 const InstallPrompt: React.FunctionComponent<IInstallPromptProps> = () => {
-  const { isIOS } = useDivice();
+  const { isIOS, isPWA } = useDivice();
   const { promptToInstall, isShow, onClose } = useAddToHomescreenPrompt();
 
-  if (!isShow) return null;
+  if (!isShow || isPWA) return null;
 
   return (
     <>
@@ -25,7 +25,7 @@ const InstallPrompt: React.FunctionComponent<IInstallPromptProps> = () => {
             <ShareIcon size={18} /> 을 눌러 홈 화면에 추가해 보세요
           </span>
           <button
-            onClick={() => {}}
+            onClick={onClose}
             className="aspect-square p-1.5 bg-zinc-600 rounded-md absolute right-4 top-4"
           >
             <XIcon size={20} />
