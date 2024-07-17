@@ -16,26 +16,26 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage((payload) => {
-  console.log(
-    "[firebase-messaging-sw.js] Received background message ",
-    payload
-  );
+// messaging.onBackgroundMessage((payload) => {
+//   console.log(
+//     "[firebase-messaging-sw.js] Received background message ",
+//     payload
+//   );
 
-  const link = payload.fcmOptions?.link || payload.data?.link;
+//   const link = payload.fcmOptions?.link || payload.data?.link;
 
-  const notificationTitle = payload.notification.title;
-  const notificationOptions = {
-    body: payload.notification.body,
-    icon: "/favicon.ico",
-    image: "/vercel.svg",
-    data: {
-      url: link,
-    },
-  };
+//   const notificationTitle = payload.notification.title;
+//   const notificationOptions = {
+//     body: payload.notification.body,
+//     icon: "/favicon.ico",
+//     image: "/vercel.svg",
+//     data: {
+//       url: link,
+//     },
+//   };
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
-});
+//   self.registration.showNotification(notificationTitle, notificationOptions);
+// });
 
 // 클릭 이벤트 처리
 // 알림을 클릭하면 사이트로 이동한다.
