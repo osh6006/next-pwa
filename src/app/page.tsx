@@ -1,7 +1,7 @@
 "use client";
 
+import FcmTokenComp from "@/components/firebase-foreground";
 import InstallPrompt from "@/components/installPrompt";
-import useDivice from "@/hooks/use-divice";
 import { app } from "@/lib/firebase";
 import { sendPushNotification } from "@/utils/notification";
 import { getMessaging, getToken } from "firebase/messaging";
@@ -19,8 +19,6 @@ import { useState } from "react";
 export default function Home() {
   const [showToken, setShowToken] = useState("");
   const [copySuccess, setCopySuccess] = useState(false);
-
-  const { isIOS, isPWA } = useDivice();
 
   // 푸시 알림 테스트
   const handlePush = () => {
@@ -81,6 +79,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col max-w-[400px] mx-auto w-screen h-screen overflow-hidden items-center justify-center p-10">
+      <FcmTokenComp />
       <Image
         className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
         src="/next.svg"
@@ -93,14 +92,14 @@ export default function Home() {
         PWA Test App 입니다.{" "}
       </h1>
       <div className="space-y-5 py-8 flex flex-col">
-        <button
+        {/* <button
           onClick={handlePush}
           type="button"
           className="text-gray-900 gap-x-2 justify-center bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-semibold rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 "
         >
           <BellRingIcon size={18} />
           푸시 알림 보내기
-        </button>
+        </button> */}
         <button
           onClick={handlePermission}
           type="button"
@@ -115,12 +114,12 @@ export default function Home() {
           className="text-gray-900 gap-x-2 justify-center bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-semibold rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
         >
           <ScanTextIcon size={18} />
-          등록 토큰 받기
+          알람 토큰 받기
         </button>
       </div>
       <div className="text-center">
-        <p className="mt-4">아래의 토큰을 개발자에게 보내주세요</p>
-        <p className="text-xs mt-4 break-words">
+        <p className="">아래의 토큰을 개발자에게 보내주세요</p>
+        <p className="text-xs my-4 break-all  bg-gray-800 p-4 rounded-lg text-center">
           {!showToken
             ? "토큰이 없습니다 토큰 받기 버튼을 클릭하세요"
             : showToken}
